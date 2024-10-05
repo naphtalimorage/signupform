@@ -1,0 +1,28 @@
+.Container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: fit-content;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+p {
+    color: gray;
+    margin-bottom: 30px;
+    margin-top: 2px;
+}
+
+input {
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: rgb(48, 123, 244);
+}
