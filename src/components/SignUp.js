@@ -2,8 +2,7 @@ import React from "react";
 import "../index.css";
 import "./SignUp.css";
 import { Link } from "react-router-dom";
-import { SignupSchema } from "../validation";
-
+// import { SignupSchema } from "../validation";
 
 function SignUpForm() {
   const [formData, setFormData] = React.useState({
@@ -11,53 +10,32 @@ function SignUpForm() {
     email: "",
     password: "",
   });
-  const [errors, setErrors] = React.useState({});
+  // const [errors, setErrors] = React.useState({});
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-
-    const ValidatingData = SignupSchema.safeParse(formData);
-    if (!ValidatingData.success) {
-      const FieldErrors = ValidatingData.error.format();
-      setErrors(FieldErrors);
-    } else {
-      try{
-        const SendData = async () => {
-          const response = await fetch("/regester",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(formData),
-            }
-          );
-          if (response.ok) {
-            const message = await response.text();
-            alert(message);
-          } else {}
-
-        }
-        
-        SendData();
-      } catch(error){
-        console.log("Error:", error);
-        alert("Error occurred while sending data."); 
+      if (!response.ok) {
+        alert("Response failed");
+      } else {
+        alert("Registered successfully.")
       }
-      
-      };
-      console.log("Form data is valid:", formData);
-      setErrors({});
+    } catch (error) {
+      console.error("Error:", error);
     }
-  
+  };
 
   return (
-
     <div className="flex justify-center items-center ">
       <form className="Container" onSubmit={handleSubmit}>
         <h1 className="text-2xl font-bold">Sign Up</h1>
@@ -72,9 +50,6 @@ function SignUpForm() {
           onChange={handleChange}
           className="border  border-black px-2 h-10 w-full rounded-lg"
         />
-        {errors.username && (
-          <p className="text-red-500">{errors.username._errors[0]}</p>
-        )}
 
         <label for="email">Email</label>
         <input
@@ -86,9 +61,7 @@ function SignUpForm() {
           onChange={handleChange}
           className="border  border-black h-10 px-2 w-full rounded-lg"
         />
-        {errors.email && (
-          <p className="text-red-500">{errors.email._errors[0]}</p>
-        )}
+
         <label for="password" className="mt-5 mb-6">
           Password
         </label>
@@ -101,9 +74,7 @@ function SignUpForm() {
           onChange={handleChange}
           className=" border border-black px-2 h-10 w-full rounded-md"
         />
-        {errors.password && (
-          <p className="text-red-500">{errors.password._errors[0]}</p>
-        )}
+
         <button
           type="submit"
           className="bg-blue-500  text-white font-bold py-2 px-4 rounded-lg "
