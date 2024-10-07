@@ -10,6 +10,7 @@ function SignUpForm() {
     email: "",
     password: "",
   });
+  const [message, setMessage] = React.useState("");
   // const [errors, setErrors] = React.useState({});
 
   const handleChange = (e) => {
@@ -26,10 +27,14 @@ function SignUpForm() {
       });
 
       if (!response.ok) {
-        alert("Response failed");
-      } else {
-        alert("Registered successfully.")
-      }
+        const errorData = await response.json();
+        setMessage(errorData.error);
+        return;
+      } 
+    
+        const data = await response.json();
+        alert(data.message);
+    
     } catch (error) {
       console.error("Error:", error);
     }
@@ -84,6 +89,8 @@ function SignUpForm() {
         <p className="text-center mt-4">
           Already have an account? <Link to="/login">Login</Link>
         </p>
+
+        {message && <p className="text-center mt-4 text-red-600">{message}</p>}
       </form>
     </div>
   );
