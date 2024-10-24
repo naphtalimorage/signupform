@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "ajv-keywords": "^5.1.0",
     "autoprefixer": "^10.4.20",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^4.21.0",
     "lucia-auth": "^1.8.0",

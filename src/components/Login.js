@@ -7,7 +7,6 @@ export default function LoginForm() {
     password: "",
   });
 
-  const [message, setMessage] = React.useState("");
 
   const handleLoginChange = (e) => {
     setLoginData({ ...LoginData, [e.target.name]: e.target.value });
@@ -24,7 +23,7 @@ export default function LoginForm() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        setMessage(errorData.error);
+        alert(errorData.error);
         return;
       }
 
@@ -33,7 +32,6 @@ export default function LoginForm() {
 
     } catch (error) {
       console.error(error);
-      alert("Failed to login. Please try again.");
       return;
     }
   };
@@ -70,7 +68,6 @@ export default function LoginForm() {
         >
           Login
         </button>
-        {message && <p className="text-center mt-4 text-red-600">{message}</p>}
         <p className="text-center mt-4">
           Already have an account? <Link to="/">Sign Up</Link>
         </p>
